@@ -1,4 +1,4 @@
-package com.daw.clinica.models;
+package com.daw.gestio_clinica_medica.modelos;
 
 import jakarta.persistence.*;
 

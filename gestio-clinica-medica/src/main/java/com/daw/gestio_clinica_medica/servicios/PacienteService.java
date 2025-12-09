@@ -1,4 +1,4 @@
-package com.daw.clinica.services;
+package com.daw.gestio_clinica_medica.servicios;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daw.clinica.models.Paciente;
-import com.daw.clinica.repositories.PacienteRepository;
+import com.daw.gestio_clinica_medica.modelos.Paciente;
+import com.daw.gestio_clinica_medica.respositorios.PacienteRepository;
+
+
 
 /**
  * Servicio que encapsula la lógica de negocio relacionada con la entidad Paciente.
