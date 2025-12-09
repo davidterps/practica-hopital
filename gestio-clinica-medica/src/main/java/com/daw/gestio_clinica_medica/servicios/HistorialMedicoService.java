@@ -3,26 +3,29 @@ package com.daw.gestio_clinica_medica.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daw.gestio_clinica_medica.modelos.HistorialMedico;
 import com.daw.gestio_clinica_medica.respositorios.HistorialMedicoRepository;
 
-
-
 /**
- * Servicio que encapsula la lógica de negocio relacionada con la entidad HistorialMedico.
+ * Servicio que encapsula la lógica de negocio relacionada con la entidad
+ * HistorialMedico.
  * Utiliza el repositorio correspondiente para acceder a la base de datos.
  */
 @Service
 public class HistorialMedicoService {
 
     /**
-     * Repositorio JPA para acceder a la entidad HistorialMedico en la base de datos.
+     * Repositorio JPA para acceder a la entidad HistorialMedico en la base de
+     * datos.
      */
-    @Autowired
+
     private HistorialMedicoRepository historialMedicoRepository;
+
+    public HistorialMedicoService(HistorialMedicoRepository historialMedicoRepository) {
+        this.historialMedicoRepository = historialMedicoRepository;
+    }
 
     /**
      * Devuelve una lista con todas las entidades HistorialMedico almacenadas.
