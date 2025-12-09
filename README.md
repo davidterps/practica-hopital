@@ -1,5 +1,5 @@
 # Roles
-## Serio -> Paciente
+## Sergio -> Paciente
 ## Ian -> Medico y HistorialMedico
-## Eric -> Especialidad
+## Erik -> Especialidad
 ## David -> Cita
