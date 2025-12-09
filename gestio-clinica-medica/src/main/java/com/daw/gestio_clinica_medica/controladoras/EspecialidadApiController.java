@@ -3,7 +3,6 @@ package com.daw.gestio_clinica_medica.controladoras;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.gestio_clinica_medica.modelos.Especialidad;
+import com.daw.gestio_clinica_medica.modelos.Medico;
 import com.daw.gestio_clinica_medica.servicios.EspecialidadService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,5 +59,13 @@ public class EspecialidadApiController {
         especialidadService.deleteById(id);
     }
 
-    
+    @GetMapping("/{id}/medicos")
+    public List<Medico> listarMedicosPorEspecialidad(@PathVariable Long id) {
+        Optional<Especialidad> especialidad = this.especialidadService.findById(id);
+
+        if(especialidad.isEmpty()){
+            return null;
+        }
+        return especialidad.get().getMedicos();
+    }
 }
