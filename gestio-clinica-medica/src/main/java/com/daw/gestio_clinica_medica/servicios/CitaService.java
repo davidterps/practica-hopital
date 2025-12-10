@@ -3,6 +3,7 @@ package com.daw.gestio_clinica_medica.servicios;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daw.gestio_clinica_medica.modelos.Cita;
@@ -19,12 +20,9 @@ public class CitaService {
     /**
      * Repositorio JPA para acceder a la entidad Cita en la base de datos.
      */
-
-    private final CitaRepository citaRepository;
-
-    public CitaService(CitaRepository citaRepository) {
-        this.citaRepository = citaRepository;
-    }
+    @Autowired
+    private CitaRepository citaRepository;
+    
 
     /**
      * Devuelve una lista con todas las entidades Cita almacenadas.
@@ -63,12 +61,6 @@ public class CitaService {
     public void deleteById(Long id) {
         citaRepository.deleteById(id);
     }
-    public List<Cita> findByPacienteId(Long idPaciente) {
-        return citaRepository.findByPacienteId(idPaciente);
-    }
-    public List<Cita> findByMedicoId(Long idMedico) {
-        return citaRepository.findByMedicoId(idMedico);
-
-    }
+  
 
 }
