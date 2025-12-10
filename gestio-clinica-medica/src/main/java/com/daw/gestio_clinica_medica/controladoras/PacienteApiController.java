@@ -56,19 +56,19 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * GET /api/pacientes/{id} → Devuelve un paciente por id.
+	 * GET /api/pacientes/{idPaciente} → Devuelve un paciente por idPaciente.
 	 *
-	 * @param id identificador del paciente
+	 * @param idPaciente identificador del paciente
 	 * @return paciente si existe, null o mensaje si no
 	 */
-	@GetMapping("/{id}")
-	public Paciente getPacienteById(@PathVariable Long id) {
-		Optional<Paciente> paciente = pacienteService.findById(id);
+	@GetMapping("/{idPaciente}")
+	public Paciente getPacienteById(@PathVariable Long idPaciente) {
+		Optional<Paciente> paciente = pacienteService.findById(idPaciente);
 		if (paciente.isPresent()) {
 			System.out.println("[OK 200] Paciente encontrado: " + paciente.get().getIdPaciente());
 			return paciente.get();
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado");
 			return null;
 		}
 	}
@@ -90,7 +90,7 @@ public class PacienteApiController {
 		}
 		try {
 			Paciente pacienteGuardado = pacienteService.save(paciente);
-			System.out.println("[OK 201] Paciente creado con id: " + pacienteGuardado.getIdPaciente());
+			System.out.println("[OK 201] Paciente creado con idPaciente: " + pacienteGuardado.getIdPaciente());
 			redirectAttributes.addFlashAttribute("success", "Paciente creado exitosamente");
 			return pacienteGuardado;
 		} catch (Exception e) {
@@ -101,22 +101,22 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * PUT /api/pacientes/{id} → Modifica un paciente existente.
+	 * PUT /api/pacientes/{idPaciente} → Modifica un paciente existente.
 	 *
-	 * @param id       identificador del paciente a actualizar
+	 * @param idPaciente       identificador del paciente a actualizar
 	 * @param paciente datos actualizados
 	 * @param redirectAttributes para mensajes de validación
 	 * @return paciente actualizado o null si no existe
 	 */
-	@PutMapping("/{id}")
-	public Paciente updatePaciente(@PathVariable Long id, @RequestBody Paciente paciente,
+	@PutMapping("/{idPaciente}")
+	public Paciente updatePaciente(@PathVariable Long idPaciente, @RequestBody Paciente paciente,
 			RedirectAttributes redirectAttributes) {
-		Optional<Paciente> pacienteExistente = pacienteService.findById(id);
+		Optional<Paciente> pacienteExistente = pacienteService.findById(idPaciente);
 		if (pacienteExistente.isPresent()) {
-			paciente.setIdPaciente(id);
+			paciente.setIdPaciente(idPaciente);
 			try {
 				Paciente pacienteActualizado = pacienteService.save(paciente);
-				System.out.println("[OK 200] Paciente actualizado: " + id);
+				System.out.println("[OK 200] Paciente actualizado: " + idPaciente);
 				redirectAttributes.addFlashAttribute("success", "Paciente actualizado exitosamente");
 				return pacienteActualizado;
 			} catch (Exception e) {
@@ -125,26 +125,26 @@ public class PacienteApiController {
 				return null;
 			}
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado para actualizar");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado para actualizar");
 			redirectAttributes.addFlashAttribute("error", "Paciente no encontrado");
 			return null;
 		}
 	}
 
 	/**
-	 * DELETE /api/pacientes/{id} → Elimina un paciente.
+	 * DELETE /api/pacientes/{idPaciente} → Elimina un paciente.
 	 *
-	 * @param id identificador del paciente a eliminar
+	 * @param idPaciente identificador del paciente a eliminar
 	 * @param redirectAttributes para mensajes de validación
 	 * @return mensaje de confirmación o error
 	 */
-	@DeleteMapping("/{id}")
-	public String deletePaciente(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-		Optional<Paciente> paciente = pacienteService.findById(id);
+	@DeleteMapping("/{idPaciente}")
+	public String deletePaciente(@PathVariable Long idPaciente, RedirectAttributes redirectAttributes) {
+		Optional<Paciente> paciente = pacienteService.findById(idPaciente);
 		if (paciente.isPresent()) {
 			try {
-				pacienteService.deleteById(id);
-				System.out.println("[OK 204] Paciente eliminado: " + id);
+				pacienteService.deleteById(idPaciente);
+				System.out.println("[OK 204] Paciente eliminado: " + idPaciente);
 				redirectAttributes.addFlashAttribute("success", "Paciente eliminado exitosamente");
 				return "Paciente eliminado";
 			} catch (Exception e) {
@@ -153,7 +153,7 @@ public class PacienteApiController {
 				return "Error";
 			}
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado para eliminar");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado para eliminar");
 			redirectAttributes.addFlashAttribute("error", "Paciente no encontrado");
 			return "No encontrado";
 		}
@@ -162,40 +162,40 @@ public class PacienteApiController {
 	// ========== ENDPOINTS CITAS ==========
 
 	/**
-	 * GET /api/pacientes/{id}/citas → Devuelve todas las citas del paciente.
+	 * GET /api/pacientes/{idPaciente}/citas → Devuelve todas las citas del paciente.
 	 *
-	 * @param id identificador del paciente
+	 * @param idPaciente identificador del paciente
 	 * @return lista de citas o null si paciente no existe
 	 */
-	@GetMapping("/{id}/citas")
-	public List<Cita> getCitasPaciente(@PathVariable Long id) {
-		Optional<Paciente> paciente = pacienteService.findById(id);
+	@GetMapping("/{idPaciente}/citas")
+	public List<Cita> getCitasPaciente(@PathVariable Long idPaciente) {
+		Optional<Paciente> paciente = pacienteService.findById(idPaciente);
 		if (paciente.isPresent()) {
-			System.out.println("[OK 200] Citas del paciente " + id + " obtenidas");
+			System.out.println("[OK 200] Citas del paciente " + idPaciente + " obtenidas");
 			return paciente.get().getCitas();
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado");
 			return null;
 		}
 	}
 
 	/**
-	 * POST /api/pacientes/{id}/citas → Crea una nueva cita para ese paciente.
+	 * POST /api/pacientes/{idPaciente}/citas → Crea una nueva cita para ese paciente.
 	 *
-	 * @param id   identificador del paciente
+	 * @param idPaciente   identificador del paciente
 	 * @param cita objeto cita a crear
 	 * @param redirectAttributes para mensajes de validación
 	 * @return cita creada o null si paciente no existe
 	 */
-	@PostMapping("/{id}/citas")
-	public Cita createCitaPaciente(@PathVariable Long id, @RequestBody Cita cita,
+	@PostMapping("/{idPaciente}/citas")
+	public Cita createCitaPaciente(@PathVariable Long idPaciente, @RequestBody Cita cita,
 			RedirectAttributes redirectAttributes) {
-		Optional<Paciente> paciente = pacienteService.findById(id);
+		Optional<Paciente> paciente = pacienteService.findById(idPaciente);
 		if (paciente.isPresent()) {
 			try {
 				cita.setPaciente(paciente.get());
 				Cita citaGuardada = citaService.save(cita);
-				System.out.println("[OK 201] Cita creada para paciente: " + id);
+				System.out.println("[OK 201] Cita creada para paciente: " + idPaciente);
 				redirectAttributes.addFlashAttribute("success", "Cita creada exitosamente");
 				return citaGuardada;
 			} catch (Exception e) {
@@ -204,7 +204,7 @@ public class PacienteApiController {
 				return null;
 			}
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado");
 			redirectAttributes.addFlashAttribute("error", "Paciente no encontrado");
 			return null;
 		}
@@ -213,46 +213,46 @@ public class PacienteApiController {
 	// ========== ENDPOINTS HISTORIAL MÉDICO ==========
 
 	/**
-	 * GET /api/pacientes/{id}/historial → Devuelve el historial médico del paciente.
+	 * GET /api/pacientes/{idPaciente}/historial → Devuelve el historial médico del paciente.
 	 *
-	 * @param id identificador del paciente
+	 * @param idPaciente identificador del paciente
 	 * @return historial médico o null
 	 */
-	@GetMapping("/{id}/historial")
-	public HistorialMedico getHistorialPaciente(@PathVariable Long id) {
-		Optional<Paciente> paciente = pacienteService.findById(id);
+	@GetMapping("/{idPaciente}/historial")
+	public HistorialMedico getHistorialPaciente(@PathVariable Long idPaciente) {
+		Optional<Paciente> paciente = pacienteService.findById(idPaciente);
 		if (paciente.isPresent()) {
 			HistorialMedico historial = paciente.get().getHistorial();
 			if (historial != null) {
-				System.out.println("[OK 200] Historial del paciente " + id + " obtenido");
+				System.out.println("[OK 200] Historial del paciente " + idPaciente + " obtenido");
 				return historial;
 			} else {
-				System.out.println("[ERROR 404] Historial no encontrado para paciente: " + id);
+				System.out.println("[ERROR 404] Historial no encontrado para paciente: " + idPaciente);
 				return null;
 			}
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado");
 			return null;
 		}
 	}
 
 	/**
-	 * POST /api/pacientes/{id}/historial → Crea un historial médico para el paciente.
+	 * POST /api/pacientes/{idPaciente}/historial → Crea un historial médico para el paciente.
 	 *
-	 * @param id       identificador del paciente
+	 * @param idPaciente       identificador del paciente
 	 * @param historial objeto historial a crear
 	 * @param redirectAttributes para mensajes de validación
 	 * @return historial creado o null si paciente no existe
 	 */
-	@PostMapping("/{id}/historial")
-	public HistorialMedico createHistorialPaciente(@PathVariable Long id,
+	@PostMapping("/{idPaciente}/historial")
+	public HistorialMedico createHistorialPaciente(@PathVariable Long idPaciente,
 			@RequestBody HistorialMedico historial, RedirectAttributes redirectAttributes) {
-		Optional<Paciente> paciente = pacienteService.findById(id);
+		Optional<Paciente> paciente = pacienteService.findById(idPaciente);
 		if (paciente.isPresent()) {
 			try {
 				historial.setPaciente(paciente.get());
 				HistorialMedico historialGuardado = historialMedicoService.save(historial);
-				System.out.println("[OK 201] Historial creado para paciente: " + id);
+				System.out.println("[OK 201] Historial creado para paciente: " + idPaciente);
 				redirectAttributes.addFlashAttribute("success", "Historial creado exitosamente");
 				return historialGuardado;
 			} catch (Exception e) {
@@ -261,24 +261,24 @@ public class PacienteApiController {
 				return null;
 			}
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado");
 			redirectAttributes.addFlashAttribute("error", "Paciente no encontrado");
 			return null;
 		}
 	}
 
 	/**
-	 * PUT /api/pacientes/{id}/historial → Actualiza el historial médico del paciente.
+	 * PUT /api/pacientes/{idPaciente}/historial → Actualiza el historial médico del paciente.
 	 *
-	 * @param id       identificador del paciente
+	 * @param idPaciente       identificador del paciente
 	 * @param historial datos actualizados del historial
 	 * @param redirectAttributes para mensajes de validación
 	 * @return historial actualizado o null si no existe
 	 */
-	@PutMapping("/{id}/historial")
-	public HistorialMedico updateHistorialPaciente(@PathVariable Long id,
+	@PutMapping("/{idPaciente}/historial")
+	public HistorialMedico updateHistorialPaciente(@PathVariable Long idPaciente,
 			@RequestBody HistorialMedico historial, RedirectAttributes redirectAttributes) {
-		Optional<Paciente> paciente = pacienteService.findById(id);
+		Optional<Paciente> paciente = pacienteService.findById(idPaciente);
 		if (paciente.isPresent()) {
 			HistorialMedico historialExistente = paciente.get().getHistorial();
 			if (historialExistente != null) {
@@ -286,7 +286,7 @@ public class PacienteApiController {
 					historial.setIdHistorial(historialExistente.getIdHistorial());
 					historial.setPaciente(paciente.get());
 					HistorialMedico historialActualizado = historialMedicoService.save(historial);
-					System.out.println("[OK 200] Historial actualizado para paciente: " + id);
+					System.out.println("[OK 200] Historial actualizado para paciente: " + idPaciente);
 					redirectAttributes.addFlashAttribute("success", "Historial actualizado exitosamente");
 					return historialActualizado;
 				} catch (Exception e) {
@@ -295,12 +295,12 @@ public class PacienteApiController {
 					return null;
 				}
 			} else {
-				System.out.println("[ERROR 404] Historial no encontrado para paciente: " + id);
+				System.out.println("[ERROR 404] Historial no encontrado para paciente: " + idPaciente);
 				redirectAttributes.addFlashAttribute("error", "Historial no encontrado");
 				return null;
 			}
 		} else {
-			System.out.println("[ERROR 404] Paciente con id " + id + " no encontrado");
+			System.out.println("[ERROR 404] Paciente con idPaciente " + idPaciente + " no encontrado");
 			redirectAttributes.addFlashAttribute("error", "Paciente no encontrado");
 			return null;
 		}
