@@ -52,7 +52,7 @@ public class EspecialidadApiController {
     }
 
     // metodo para guardar una especialidad
-    @PostMapping("/{id}")    // PostMapping para guardar o actualizar información de la base de datos
+    @PostMapping    // PostMapping para guardar o actualizar información de la base de datos
     public Especialidad guardarEspecialidad(@RequestBody Especialidad datos) {
         return especialidadService.save(datos);
     }
