@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@RestController 
+@RestController
 @RequestMapping("/api/medicos")
 public class MedicoApiController {
 
-    
-    //importacion de servicios
+    // importacion de servicios
     private final MedicoService medicoService;
     private final EspecialidadService especialidadService;
 
@@ -34,39 +33,47 @@ public class MedicoApiController {
         this.especialidadService = especialidadService;
     }
 
-
-    @GetMapping("")
+    @GetMapping()
     public List<Medico> listaMedicos() {
         List<Medico> medicos = medicoService.findAll();
         return medicos;
     }
 
     @GetMapping("/{id}")
-    public Medico medicoPorId(@PathVariable Long id,RedirectAttributes redirectAtrttibutes) {
-        //manejar errores por no encontrar al medico en la base de datos 
+    public Medico medicoPorId(@PathVariable Long id, RedirectAttributes redirectAtrttibutes) {
+        // manejar errores por no encontrar al medico en la base de datos
         Optional<Medico> medico = medicoService.findById(id);
         if (medico.isEmpty()) {
             redirectAtrttibutes.addFlashAttribute("errorSF",
-            "404 not found");
+                    "404 not found");
             return null;
         }
         redirectAtrttibutes.addFlashAttribute("estadoSF",
-            "200 OK");
+                "200 OK");
         return medico.get();
     }
-    @PostMapping("")
-    public Medico nuevoMedico(@RequestBody Medico med) {
-        //guarda el nuevo medico
+
+    @PostMapping()
+    public Medico nuevoMedico(@RequestBody Medico med, RedirectAttributes redirectAtrttibutes) {
+        if (especialidadService.findById(med.getEspecialidad().getIdEspecialidad()).isEmpty()) {
+            redirectAtrttibutes.addFlashAttribute("errorSF",
+                    "404 not found");
+            return null;
+        }
+        // guarda el nuevo medico
         return medicoService.save(med);
-        
+
     }
+
     @PutMapping("/{id}")
     public Medico modificarMedico(@PathVariable Long id, @RequestBody Medico data) {
-        //manejar errores por no encontrar al medico en la base de datos 
+        // manejar errores por no encontrar al medico en la base de datos
         Optional<Medico> medico = medicoService.findById(id);
-        if (medico.isEmpty()) {return null;}
+        if (medico.isEmpty()) {
+            return null;
+        }
 
-        //modifico cada dato recibido en el medico por id 
+        // modifico cada dato recibido en el medico por id
         medico.get().setNombre(data.getNombre());
         medico.get().setApellidos(data.getApellidos());
         medico.get().setCitas(data.getCitas());
@@ -74,49 +81,50 @@ public class MedicoApiController {
 
         return medicoService.save(medico.get());
     }
+
     @DeleteMapping("/{id}")
     public String borrarMedico(@PathVariable Long id, RedirectAttributes redirectAtrttibutes) {
-        //manejar errores por no encontrar al medico en la base de datos 
+        // manejar errores por no encontrar al medico en la base de datos
         Optional<Medico> medico = medicoService.findById(id);
         if (medico.isEmpty()) {
             redirectAtrttibutes.addFlashAttribute("errorSF",
-            "404 not found");
+                    "404 not found");
             return null;
         }
-        //elimina la entidad y muestra un mensaje 
+        // elimina la entidad y muestra un mensaje
         medicoService.deleteById(id);
-        return "Medico con id ->"+ medico.get().getIdMedico()+ " borrado con exito";
+        return "Medico con id ->" + medico.get().getIdMedico() + " borrado con exito";
     }
-    
 
     @GetMapping("/{id}/citas")
     public List<Cita> citaMedicoPorId(@PathVariable Long id, RedirectAttributes redirectAtrttibutes) {
-        //manejar errores por no encontrar al medico en la base de datos 
+        // manejar errores por no encontrar al medico en la base de datos
         Optional<Medico> medico = medicoService.findById(id);
         if (medico.isEmpty()) {
             redirectAtrttibutes.addFlashAttribute("errorSF",
-            "404 not found");
+                    "404 not found");
             return null;
         }
-        
+
         redirectAtrttibutes.addFlashAttribute("estadoSF",
-            "200 OK");
+                "200 OK");
         return medico.get().getCitas();
     }
 
     @GetMapping("/especialidad/{idEspecialidad}")
-    public List<Medico> medicosPorEspecialidad(@PathVariable Long idEspecialidad, RedirectAttributes redirectAtrttibutes) {
-        //manejar errores por si no se encuentra la especialidad en la base de datos 
+    public List<Medico> medicosPorEspecialidad(@PathVariable Long idEspecialidad,
+            RedirectAttributes redirectAtrttibutes) {
+        // manejar errores por si no se encuentra la especialidad en la base de datos
         Optional<Especialidad> especialidad = especialidadService.findById(idEspecialidad);
         if (especialidad.isEmpty()) {
             redirectAtrttibutes.addFlashAttribute("errorSF",
-            "404 not found");
+                    "404 not found");
             return null;
         }
-        
+
         redirectAtrttibutes.addFlashAttribute("estadoSF",
-            "200 OK");
+                "200 OK");
         return especialidad.get().getMedicos();
     }
-    
+
 }
