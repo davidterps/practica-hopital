@@ -22,6 +22,7 @@ public class CitaService {
      */
     @Autowired
     private CitaRepository citaRepository;
+    
 
     /**
      * Devuelve una lista con todas las entidades Cita almacenadas.
@@ -60,12 +61,6 @@ public class CitaService {
     public void deleteById(Long id) {
         citaRepository.deleteById(id);
     }
-    public List<Cita> findByPacienteId(Long idPaciente) {
-        return citaRepository.findByPacienteId(idPaciente);
-    }
-    public List<Cita> findByMedicoId(Long idMedico) {
-        return citaRepository.findByMedicoId(idMedico);
-
-    }
+  
 
 }
