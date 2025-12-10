@@ -3,7 +3,6 @@ package com.daw.gestio_clinica_medica.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daw.gestio_clinica_medica.modelos.Especialidad;
@@ -19,8 +18,12 @@ public class EspecialidadService {
     /**
      * Repositorio JPA para acceder a la entidad Especialidad en la base de datos.
      */
-    @Autowired
-    private EspecialidadRepository especialidadRepository;
+    private final EspecialidadRepository especialidadRepository;
+
+    
+    public EspecialidadService(EspecialidadRepository especialidadRepository) {
+        this.especialidadRepository = especialidadRepository;
+    }
 
     /**
      * Devuelve una lista con todas las entidades Especialidad almacenadas.
