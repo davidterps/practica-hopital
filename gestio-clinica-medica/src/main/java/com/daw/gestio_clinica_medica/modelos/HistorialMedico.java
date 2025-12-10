@@ -1,5 +1,7 @@
 package com.daw.gestio_clinica_medica.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 /**
@@ -28,6 +30,7 @@ public class HistorialMedico {
      */
     @OneToOne
     @JoinColumn(name = "id_paciente", unique = true)
+    @JsonIgnore  // Evita recursión al no serializar las citas en el 
     private Paciente paciente;
 
     /**
