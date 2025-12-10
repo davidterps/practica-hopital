@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 /**
@@ -38,6 +40,7 @@ public class Paciente {
      * Documento de identificación del paciente.
      */
     @Column(nullable = false, unique = true, length = 20) // Valor obligatorio y único
+    @JsonIgnore  // Evita recursión al no serializar las citas en el 
     private String dni;
 
     /**

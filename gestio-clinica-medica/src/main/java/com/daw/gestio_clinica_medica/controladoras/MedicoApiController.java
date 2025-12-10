@@ -2,6 +2,7 @@ package com.daw.gestio_clinica_medica.controladoras;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.daw.gestio_clinica_medica.modelos.Cita;
 import com.daw.gestio_clinica_medica.modelos.Especialidad;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@RestController
+@RestController 
 @RequestMapping("/api/medicos")
 public class MedicoApiController {
 
@@ -28,9 +29,7 @@ public class MedicoApiController {
     private final MedicoService medicoService;
     private final EspecialidadService especialidadService;
 
-    public MedicoApiController(MedicoService medicoService, 
-                                EspecialidadService especialidadService) 
-    {
+    public MedicoApiController(MedicoService medicoService, EspecialidadService especialidadService) {
         this.medicoService = medicoService;
         this.especialidadService = especialidadService;
     }
@@ -41,13 +40,18 @@ public class MedicoApiController {
         List<Medico> medicos = medicoService.findAll();
         return medicos;
     }
+
     @GetMapping("/{id}")
-    public Medico medicoPorId(@PathVariable Long id) {
+    public Medico medicoPorId(@PathVariable Long id,RedirectAttributes redirectAtrttibutes) {
         //manejar errores por no encontrar al medico en la base de datos 
         Optional<Medico> medico = medicoService.findById(id);
         if (medico.isEmpty()) {
+            redirectAtrttibutes.addFlashAttribute("errorSF",
+            "404 not found");
             return null;
         }
+        redirectAtrttibutes.addFlashAttribute("estadoSF",
+            "200 OK");
         return medico.get();
     }
     @PostMapping("")
@@ -71,10 +75,12 @@ public class MedicoApiController {
         return medicoService.save(medico.get());
     }
     @DeleteMapping("/{id}")
-    public String borrarMedico(@PathVariable Long id) {
+    public String borrarMedico(@PathVariable Long id, RedirectAttributes redirectAtrttibutes) {
         //manejar errores por no encontrar al medico en la base de datos 
         Optional<Medico> medico = medicoService.findById(id);
         if (medico.isEmpty()) {
+            redirectAtrttibutes.addFlashAttribute("errorSF",
+            "404 not found");
             return null;
         }
         //elimina la entidad y muestra un mensaje 
@@ -84,24 +90,32 @@ public class MedicoApiController {
     
 
     @GetMapping("/{id}/citas")
-    public List<Cita> citaMedicoPorId(@PathVariable Long id) {
+    public List<Cita> citaMedicoPorId(@PathVariable Long id, RedirectAttributes redirectAtrttibutes) {
         //manejar errores por no encontrar al medico en la base de datos 
         Optional<Medico> medico = medicoService.findById(id);
         if (medico.isEmpty()) {
+            redirectAtrttibutes.addFlashAttribute("errorSF",
+            "404 not found");
             return null;
         }
         
+        redirectAtrttibutes.addFlashAttribute("estadoSF",
+            "200 OK");
         return medico.get().getCitas();
     }
 
     @GetMapping("/especialidad/{idEspecialidad}")
-    public List<Medico> medicosPorEspecialidad(@PathVariable Long idEspecialidad) {
+    public List<Medico> medicosPorEspecialidad(@PathVariable Long idEspecialidad, RedirectAttributes redirectAtrttibutes) {
         //manejar errores por si no se encuentra la especialidad en la base de datos 
         Optional<Especialidad> especialidad = especialidadService.findById(idEspecialidad);
         if (especialidad.isEmpty()) {
+            redirectAtrttibutes.addFlashAttribute("errorSF",
+            "404 not found");
             return null;
         }
         
+        redirectAtrttibutes.addFlashAttribute("estadoSF",
+            "200 OK");
         return especialidad.get().getMedicos();
     }
     

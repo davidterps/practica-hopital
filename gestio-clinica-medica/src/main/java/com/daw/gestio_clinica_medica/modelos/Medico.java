@@ -3,6 +3,8 @@ package com.daw.gestio_clinica_medica.modelos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 /**
@@ -43,6 +45,7 @@ public class Medico {
      * Lista de citas asociadas a este médico.
      */
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore  // Evita recursión al no serializar las citas en el 
     private List<Cita> citas = new ArrayList<>();
 
     /**
