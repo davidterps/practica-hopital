@@ -3,7 +3,6 @@ package com.daw.gestio_clinica_medica.servicios;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daw.gestio_clinica_medica.modelos.Paciente;
@@ -21,9 +20,12 @@ public class PacienteService {
     /**
      * Repositorio JPA para acceder a la entidad Paciente en la base de datos.
      */
-    @Autowired
-    private PacienteRepository pacienteRepository;
-
+    
+    private final PacienteRepository pacienteRepository;   
+    
+    public PacienteService(PacienteRepository pacienteRepository) {
+        this.pacienteRepository = pacienteRepository;
+    }
     /**
      * Devuelve una lista con todas las entidades Paciente almacenadas.
      *

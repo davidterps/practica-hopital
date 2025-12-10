@@ -75,8 +75,8 @@ public class citaControler {
         //control de errores
         Cita cita = citaService.findById(id).orElse(null);
         if (cita == null) {
-            deleteCita(id);
-        }
+           citaService.deleteById(id);
+        } 
     }
 
     // Consultas por relación:
