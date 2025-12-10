@@ -45,6 +45,13 @@ public class PacienteApiController {
 
 	// ========== ENDPOINTS CRUD PACIENTES ==========
 
+
+	/**=========================================================
+	 * IMPORTANTE:
+	 * TODOS LOS @RETURN Y @PARAM NO SON NECESARIOS PARA LA EJECUCION DEL CODIGO
+	 * ESTAS LINEAS SON NECESARIAS SOLO PARA LA DOCUMENTACION DEL JAVADOC
+	 * =========================================================
+	 */
 	/**
 	 * GET /api/pacientes → Lista todos los pacientes.
 	 *
@@ -56,7 +63,7 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * GET /api/pacientes/{idPaciente} → Devuelve un paciente por idPaciente.
+	 * GET /api/pacientes/{idPaciente} : Devuelve un paciente por idPaciente.
 	 *
 	 * @param idPaciente identificador del paciente
 	 * @return paciente si existe, null o mensaje si no
@@ -74,7 +81,7 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * POST /api/pacientes → Crea un nuevo paciente.
+	 * POST /api/pacientes : Crea un nuevo paciente.
 	 * Recibe JSON en el cuerpo.
 	 *
 	 * @param paciente objeto paciente a crear
@@ -101,7 +108,7 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * PUT /api/pacientes/{idPaciente} → Modifica un paciente existente.
+	 * PUT /api/pacientes/{idPaciente} : Modifica un paciente existente.
 	 *
 	 * @param idPaciente       identificador del paciente a actualizar
 	 * @param paciente datos actualizados
@@ -132,7 +139,7 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * DELETE /api/pacientes/{idPaciente} → Elimina un paciente.
+	 * DELETE /api/pacientes/{idPaciente} : Elimina un paciente.
 	 *
 	 * @param idPaciente identificador del paciente a eliminar
 	 * @param redirectAttributes para mensajes de validación
@@ -162,7 +169,7 @@ public class PacienteApiController {
 	// ========== ENDPOINTS CITAS ==========
 
 	/**
-	 * GET /api/pacientes/{idPaciente}/citas → Devuelve todas las citas del paciente.
+	 * GET /api/pacientes/{idPaciente}/citas : Devuelve todas las citas del paciente.
 	 *
 	 * @param idPaciente identificador del paciente
 	 * @return lista de citas o null si paciente no existe
@@ -180,7 +187,7 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * POST /api/pacientes/{idPaciente}/citas → Crea una nueva cita para ese paciente.
+	 * POST /api/pacientes/{idPaciente}/citas : Crea una nueva cita para ese paciente.
 	 *
 	 * @param idPaciente   identificador del paciente
 	 * @param cita objeto cita a crear
@@ -213,7 +220,7 @@ public class PacienteApiController {
 	// ========== ENDPOINTS HISTORIAL MÉDICO ==========
 
 	/**
-	 * GET /api/pacientes/{idPaciente}/historial → Devuelve el historial médico del paciente.
+	 * GET /api/pacientes/{idPaciente}/historial : Devuelve el historial médico del paciente.
 	 *
 	 * @param idPaciente identificador del paciente
 	 * @return historial médico o null
@@ -237,7 +244,7 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * POST /api/pacientes/{idPaciente}/historial → Crea un historial médico para el paciente.
+	 * POST /api/pacientes/{idPaciente}/historial : Crea un historial médico para el paciente.
 	 *
 	 * @param idPaciente       identificador del paciente
 	 * @param historial objeto historial a crear
@@ -268,7 +275,7 @@ public class PacienteApiController {
 	}
 
 	/**
-	 * PUT /api/pacientes/{idPaciente}/historial → Actualiza el historial médico del paciente.
+	 * PUT /api/pacientes/{idPaciente}/historial : Actualiza el historial médico del paciente.
 	 *
 	 * @param idPaciente       identificador del paciente
 	 * @param historial datos actualizados del historial
