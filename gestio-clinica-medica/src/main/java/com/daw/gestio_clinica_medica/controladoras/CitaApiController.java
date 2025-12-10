@@ -24,13 +24,13 @@ import com.daw.gestio_clinica_medica.servicios.PacienteService;
 
 @RestController
 @RequestMapping("/api")
-public class citaControler {
+public class CitaApiController {
 
     private final CitaService citaService;
     private final MedicoService medicoService;
     private final PacienteService pacienteService;
 
-    public citaControler(CitaService citaService, MedicoService medicoService, PacienteService pacienteService) {
+    public CitaApiController(CitaService citaService, MedicoService medicoService, PacienteService pacienteService) {
         this.citaService = citaService;
         this.medicoService = medicoService;
         this.pacienteService = pacienteService;
@@ -45,7 +45,7 @@ public class citaControler {
 
     // GET /api/citas/{id}
     @GetMapping("/citas/{id}")
-    public Cita getCitaById(Long id) {
+    public Cita getCitaById(@PathVariable Long id) {
         return citaService.findById(id).orElse(null);
     }
 

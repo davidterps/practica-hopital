@@ -55,14 +55,8 @@ public class MedicoApiController {
 
     @PostMapping()
     public Medico nuevoMedico(@RequestBody Medico med, RedirectAttributes redirectAtrttibutes) {
-        if (especialidadService.findById(med.getEspecialidad().getIdEspecialidad()).isEmpty()) {
-            redirectAtrttibutes.addFlashAttribute("errorSF",
-                    "404 not found");
-            return null;
-        }
         // guarda el nuevo medico
         return medicoService.save(med);
-
     }
 
     @PutMapping("/{id}")

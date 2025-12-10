@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -40,7 +40,6 @@ public class Paciente {
      * Documento de identificación del paciente.
      */
     @Column(nullable = false, unique = true, length = 20) // Valor obligatorio y único
-    @JsonIgnore  // Evita recursión al no serializar las citas en el 
     private String dni;
 
     /**
@@ -53,6 +52,7 @@ public class Paciente {
      * Relación uno a muchos: un paciente puede tener muchas citas.
      */
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "paciente-citas") // Evita recursión al no serializar las citas en el 
     private List<Cita> citas = new ArrayList<>();
 
     /**
@@ -60,6 +60,7 @@ public class Paciente {
      * Relación uno a uno: un paciente tiene un único historial.
      */
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "paciente-historial") // Evita recursión al no serializar las citas en el 
     private HistorialMedico historial;
 
     /**

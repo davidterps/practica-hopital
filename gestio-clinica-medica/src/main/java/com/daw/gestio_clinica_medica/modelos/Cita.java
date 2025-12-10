@@ -2,8 +2,7 @@ package com.daw.gestio_clinica_medica.modelos;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 /**
@@ -37,7 +36,7 @@ public class Cita {
      */
     @ManyToOne
     @JoinColumn(name = "id_paciente")
-    @JsonIgnore  // Evita recursión al no serializar las citas en el 
+    @JsonBackReference(value = "paciente-citas") // Evita recursión al no serializar las citas en el 
     private Paciente paciente;
 
     /**
@@ -46,7 +45,7 @@ public class Cita {
      */
     @ManyToOne
     @JoinColumn(name = "id_medico")
-    @JsonIgnore  // Evita recursión al no serializar las citas en el 
+    @JsonBackReference(value = "medico-citas") // Evita recursión al no serializar las citas en el 
     private Medico medico;
 
     /**

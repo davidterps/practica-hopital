@@ -70,7 +70,6 @@ public class EspecialidadApiController {
         }
 
         // actualizamos la información nueva en la base de datos
-        especialidad.get().setMedicos(datos.getMedicos());
         especialidad.get().setNombreEspecialidad(datos.getNombreEspecialidad());
         return especialidadService.save(especialidad.get());
     }

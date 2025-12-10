@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GestioClinicaMedicaApplication<gestio-clinica-medica>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.daw.gestio_clinica_medica.GestioClinicaMedicaApplication",
+            "projectName": "gestio-clinica-medica",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
